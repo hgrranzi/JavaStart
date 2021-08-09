@@ -1,4 +1,4 @@
-# ciao_numbers
+# CiaoNumbers
 Learning Java syntax
 
 ## Status
