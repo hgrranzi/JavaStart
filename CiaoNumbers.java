@@ -1,4 +1,3 @@
-package numbers;
 import java.util.Scanner;
 
 public class CiaoNumbers {
@@ -8,7 +7,7 @@ public class CiaoNumbers {
         boolean ok = true;
         welcomeMessage();
         while (ok) {
-            System.out.print("Enter a request:");
+            System.out.print("Enter a number:");
             System.out.println("");
             request = term.nextLong();
             ok = checkRequest(request);
@@ -17,11 +16,10 @@ public class CiaoNumbers {
     }
 
     public static void welcomeMessage() {
-        System.out.println("Welcome to Amazing Numbers!");
+        System.out.println("Welcome to CiaoNumbers!");
         System.out.println("");
-        System.out.println("Supported requests:");
-        System.out.println("- enter a natural number to know its properties;");
-        System.out.println("- enter 0 to exit.");
+        System.out.println("Enter a natural number to know its properties;");
+        System.out.println("Enter 0 to exit.");
         System.out.println("");
     }
 
