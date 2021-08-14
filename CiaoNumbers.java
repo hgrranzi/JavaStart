@@ -69,6 +69,28 @@ public class CiaoNumbers {
     }
 
     public static boolean checkList(long n, long m) {
+        boolean even = false;
+        boolean odd = false;
+        boolean buzz = false;
+        boolean duck = false;
+        boolean pal = false;
+        boolean gapful = false;
+        long i = 0;
+
+        while (i < m) {
+            if (n % 2 == 0) {
+                even = true;
+            } else {
+                odd = true;
+            }
+            buzz = checkBuzz(n);
+            duck = checkDuck(n);
+            pal = checkPal(n);
+            gapful = checkGapful(n);
+            printResOfListMember(n, even, odd, buzz, duck, pal, gapful);
+            n++;
+            i++;
+        }
         return true;
     }
 
@@ -137,5 +159,9 @@ public class CiaoNumbers {
         System.out.println("palindromic: " + pal);
         System.out.println("gapful: " + gapful);
         System.out.println("");
+    }
+
+    public static void printResOfListMember(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful) {
+        System.out.println(n);
     }
 }
