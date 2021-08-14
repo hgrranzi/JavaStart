@@ -3,13 +3,15 @@ import java.util.Scanner;
 public class CiaoNumbers {
     public static void main(String[] args) {
         Scanner term = new Scanner(System.in);
-        long request;
+        String input;
+        String[] request;
         boolean ok = true;
         welcomeMessage();
         while (ok) {
-            System.out.print("Enter a number:");
+            System.out.print("Enter a request:");
             System.out.println("");
-            request = term.nextLong();
+            input = term.nextLine();
+            request = input.split(" ");
             ok = checkRequest(request);
         }
         System.out.println("Goodbye!");
@@ -27,16 +29,28 @@ public class CiaoNumbers {
         System.out.println("");
     }
 
-    public static boolean checkRequest(long n) {
+    public static boolean checkRequest(String[] request) {
+        long n = Long.parseLong(request[0], 10);
+        long m;
+
+        if (request.length == 2) {
+            m = Long.parseLong(request[1], 10);
+            return checkList(n, m);
+        } else if (n != 0) {
+            return checkNumber(n);
+        }
+        return false;
+    }
+
+    public static boolean checkNumber(long n) {
         boolean even = false;
         boolean odd = false;
         boolean buzz = false;
         boolean duck = false;
         boolean pal = false;
         boolean gapful = false;
-        if (n == 0) {
-            return false;
-        } else if (n < 0) {
+
+        if (n < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
             return true;
         } else {
@@ -51,6 +65,10 @@ public class CiaoNumbers {
             gapful = checkGapful(n);
         }
         printRes(n, even, odd, buzz, duck, pal, gapful);
+        return true;
+    }
+
+    public static boolean checkList(long n, long m) {
         return true;
     }
 
