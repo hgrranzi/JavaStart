@@ -18,7 +18,11 @@ public class CiaoNumbers {
     public static void welcomeMessage() {
         System.out.println("Welcome to CiaoNumbers!");
         System.out.println("");
+        System.out.println("Supported requests:")
         System.out.println("Enter a natural number to know its properties;");
+        System.out.println("Enter two natural numbers to obtain the properties of the list:");
+        System.out.println(" - the first parameter represents a starting number;");
+        System.out.println(" - the second parameter shows how many consecutive numbers are to be printed;");
         System.out.println("Enter 0 to exit.");
         System.out.println("");
     }
