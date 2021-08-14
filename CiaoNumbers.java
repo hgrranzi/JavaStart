@@ -18,7 +18,7 @@ public class CiaoNumbers {
     public static void welcomeMessage() {
         System.out.println("Welcome to CiaoNumbers!");
         System.out.println("");
-        System.out.println("Supported requests:")
+        System.out.println("Supported requests:");
         System.out.println("Enter a natural number to know its properties;");
         System.out.println("Enter two natural numbers to obtain the properties of the list:");
         System.out.println(" - the first parameter represents a starting number;");
@@ -33,6 +33,7 @@ public class CiaoNumbers {
         boolean buzz = false;
         boolean duck = false;
         boolean pal = false;
+        boolean gapful = false;
         if (n == 0) {
             return false;
         } else if (n < 0) {
@@ -47,8 +48,9 @@ public class CiaoNumbers {
             buzz = checkBuzz(n);
             duck = checkDuck(n);
             pal = checkPal(n);
+            gapful = checkGapful(n);
         }
-        printRes(n, even, odd, buzz, duck, pal);
+        printRes(n, even, odd, buzz, duck, pal, gapful);
         return true;
     }
 
@@ -93,13 +95,29 @@ public class CiaoNumbers {
         return pal;
     }
 
-    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal) {
+    public static boolean checkGapful(long n) {
+        boolean gapful = true;
+        String nn = Long.toString(n);
+        long concat;
+        if (nn.length() < 3) {
+            gapful = false;
+        } else {
+            concat = (long) (nn.charAt(0) - 48) * 10 + nn.charAt(nn.length() - 1) - 48;
+            if (n % concat != 0) {
+                gapful = false;
+            }
+        }
+        return gapful;
+    }
+
+    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful) {
         System.out.println("Properties of " + n);
         System.out.println("even: " + even);
         System.out.println("odd: " + odd);
         System.out.println("buzz: " + buzz);
         System.out.println("duck: " + duck);
         System.out.println("palindromic: " + pal);
+        System.out.println("gapful: " + gapful);
         System.out.println("");
     }
 }
