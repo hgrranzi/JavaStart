@@ -70,7 +70,6 @@ public class CiaoNumbers {
 
     public static boolean checkList(long n, long m) {
         boolean even = false;
-        boolean odd = false;
         boolean buzz = false;
         boolean duck = false;
         boolean pal = false;
@@ -81,16 +80,17 @@ public class CiaoNumbers {
             if (n % 2 == 0) {
                 even = true;
             } else {
-                odd = true;
+                even = false;
             }
             buzz = checkBuzz(n);
             duck = checkDuck(n);
             pal = checkPal(n);
             gapful = checkGapful(n);
-            printResOfListMember(n, even, odd, buzz, duck, pal, gapful);
+            printResOfListMember(n, even, buzz, duck, pal, gapful);
             n++;
             i++;
         }
+        System.out.println("");
         return true;
     }
 
@@ -161,7 +161,25 @@ public class CiaoNumbers {
         System.out.println("");
     }
 
-    public static void printResOfListMember(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful) {
-        System.out.println(n);
+    public static void printResOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful) {
+        String str = Long.toString(n) + " is ";
+        if (even) {
+            str = str + "even";
+        } else {
+            str = str + "odd";
+        }
+        if (buzz) {
+            str = str + ", buzz";
+        }
+        if (duck) {
+            str = str + ", duck";
+        }
+        if (pal) {
+            str = str + ", palindromic";
+        }
+        if (gapful) {
+            str = str + ", gapful";
+        }
+        System.out.println(str);
     }
 }
