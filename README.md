@@ -1,6 +1,6 @@
 # StartJava
 
-Beginning of my journey to the Java world
+The beginning of my journey to the Java world
 
 ## Status
 
