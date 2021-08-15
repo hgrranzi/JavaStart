@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CiaoNumbers {
+public class Main {
     public static void main(String[] args) {
         Scanner term = new Scanner(System.in);
         String input;
@@ -18,7 +18,7 @@ public class CiaoNumbers {
     }
 
     public static void welcomeMessage() {
-        System.out.println("Welcome to CiaoNumbers!");
+        System.out.println("Welcome to Amazing Numbers!");
         System.out.println();
         System.out.println("Supported requests:");
         System.out.println("Enter a natural number to know its properties;");
