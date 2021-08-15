@@ -1,5 +1,6 @@
-# CiaoNumbers
-Learning Java syntax
+# StartJava
+
+Beginning of my journey to the Java world
 
 ## Status
 
