@@ -33,7 +33,12 @@ public class AmazingNumbers {
     public static boolean checkRequest(String[] request) {
         long n = Long.parseLong(request[0], 10);
         long m;
-
+        StringBuilder property;
+        if (request.length == 3) {
+            m = Long.parseLong(request[1], 10);
+            property = new StringBuilder(request[2]);
+            return checkProperty(n, m, property);
+        }
         if (request.length == 2) {
             m = Long.parseLong(request[1], 10);
             return checkList(n, m);
@@ -95,12 +100,61 @@ public class AmazingNumbers {
             pal = checkPal(n);
             gapful = checkGapful(n);
             spy = checkSpy(n);
-            printResOfListMember(n, even, buzz, duck, pal, gapful, spy);
+            System.out.println(propertyOfListMember(n, even, buzz, duck, pal, gapful, spy));
             n++;
             i++;
         }
         System.out.println();
         return true;
+    }
+
+    public static boolean checkProperty(long n, long m, StringBuilder property) {
+        boolean even;
+        boolean buzz;
+        boolean duck;
+        boolean pal;
+        boolean gapful;
+        boolean spy;
+        long i = 0;
+        StringBuilder str;
+        String prop = property.toString().toLowerCase();
+        property = new StringBuilder(prop);
+        if (n < 0) {
+            System.out.println("The first parameter should be a natural number or zero.");
+            return true;
+        }
+        if (m < 0) {
+            System.out.println("The second parameter should be a natural number or zero.");
+            return true;
+        }
+        if (!validProperty(property)) {
+            str = new StringBuilder("The property [] is wrong.");
+            str.insert(14, property.toString().toUpperCase());
+            System.out.println(str);
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+            return true;
+        }
+        while (i < m) {
+            even = n % 2 == 0;
+            buzz = checkBuzz(n);
+            duck = checkDuck(n);
+            pal = checkPal(n);
+            gapful = checkGapful(n);
+            spy = checkSpy(n);
+            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy);
+            if (str.toString().contains(property)) {
+                System.out.println(str);
+                i++;
+            }
+            n++;
+        }
+        System.out.println();
+        return true;
+    }
+
+    public static boolean validProperty(StringBuilder property) {
+        String prop = property.toString();
+        return "even".equals(prop) || "odd".equals(prop) || "buzz".equals(prop) || "duck".equals(prop) || "palindromic".equals(prop) || "gapful".equals(prop) || "spy".equals(prop);
     }
 
     public static boolean checkBuzz(long n) {
@@ -179,28 +233,28 @@ public class AmazingNumbers {
         System.out.println();
     }
 
-    public static void printResOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy) {
-        String str = n + " is ";
+    public static StringBuilder propertyOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy) {
+        StringBuilder str = new StringBuilder(n + " is ");
         if (even) {
-            str = str + "even";
+            str.append("even");
         } else {
-            str = str + "odd";
+            str.append("odd");
         }
         if (buzz) {
-            str = str + ", buzz";
+            str.append(", buzz");
         }
         if (duck) {
-            str = str + ", duck";
+            str.append(", duck");
         }
         if (pal) {
-            str = str + ", palindromic";
+            str.append(", palindromic");
         }
         if (gapful) {
-            str = str + ", gapful";
+            str.append(", gapful");
         }
         if (spy) {
-            str = str + ", spy";
+            str.append(", spy");
         }
-        System.out.println(str);
+        return str;
     }
 }
