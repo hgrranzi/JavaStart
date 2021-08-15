@@ -9,7 +9,7 @@ public class CiaoNumbers {
         welcomeMessage();
         while (ok) {
             System.out.print("Enter a request:");
-            System.out.println("");
+            System.out.println();
             input = term.nextLine();
             request = input.split(" ");
             ok = checkRequest(request);
@@ -19,14 +19,14 @@ public class CiaoNumbers {
 
     public static void welcomeMessage() {
         System.out.println("Welcome to CiaoNumbers!");
-        System.out.println("");
+        System.out.println();
         System.out.println("Supported requests:");
         System.out.println("Enter a natural number to know its properties;");
         System.out.println("Enter two natural numbers to obtain the properties of the list:");
         System.out.println(" - the first parameter represents a starting number;");
         System.out.println(" - the second parameter shows how many consecutive numbers are to be printed;");
         System.out.println("Enter 0 to exit.");
-        System.out.println("");
+        System.out.println();
     }
 
     public static boolean checkRequest(String[] request) {
@@ -45,10 +45,10 @@ public class CiaoNumbers {
     public static boolean checkNumber(long n) {
         boolean even = false;
         boolean odd = false;
-        boolean buzz = false;
-        boolean duck = false;
-        boolean pal = false;
-        boolean gapful = false;
+        boolean buzz;
+        boolean duck;
+        boolean pal;
+        boolean gapful;
 
         if (n < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
@@ -69,11 +69,11 @@ public class CiaoNumbers {
     }
 
     public static boolean checkList(long n, long m) {
-        boolean even = false;
-        boolean buzz = false;
-        boolean duck = false;
-        boolean pal = false;
-        boolean gapful = false;
+        boolean even;
+        boolean buzz;
+        boolean duck;
+        boolean pal;
+        boolean gapful;
         long i = 0;
 
         if (n < 0) {
@@ -85,11 +85,7 @@ public class CiaoNumbers {
             return true;
         }
         while (i < m) {
-            if (n % 2 == 0) {
-                even = true;
-            } else {
-                even = false;
-            }
+            even = n % 2 == 0;
             buzz = checkBuzz(n);
             duck = checkDuck(n);
             pal = checkPal(n);
@@ -98,31 +94,25 @@ public class CiaoNumbers {
             n++;
             i++;
         }
-        System.out.println("");
+        System.out.println();
         return true;
     }
 
     public static boolean checkBuzz(long n) {
-        boolean buzz = false;
+        boolean buzz;
         if (n == 7 || ((n / 10 - (n % 10) * 2) % 7 == 0)) {
-            if (n % 10 == 7) {
-                buzz = true;
-            } else {
-                buzz = true;
-            }
-        } else if (n % 10 == 7) {
             buzz = true;
-        } else {
-            buzz = false;
-        }
+        } else buzz = n % 10 == 7;
         return buzz;
     }
 
     public static boolean checkDuck(long n) {
         boolean duck = false;
         for (long tmp = n; tmp > 0; tmp /= 10) {
-            if (tmp % 10 == 0)
+            if (tmp % 10 == 0) {
                 duck = true;
+                break;
+            }
         }
         return duck;
     }
@@ -166,11 +156,11 @@ public class CiaoNumbers {
         System.out.println("duck: " + duck);
         System.out.println("palindromic: " + pal);
         System.out.println("gapful: " + gapful);
-        System.out.println("");
+        System.out.println();
     }
 
     public static void printResOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful) {
-        String str = Long.toString(n) + " is ";
+        String str = n + " is ";
         if (even) {
             str = str + "even";
         } else {
