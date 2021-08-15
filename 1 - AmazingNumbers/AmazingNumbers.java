@@ -78,12 +78,12 @@ public class AmazingNumbers {
                 odd = true;
             }
             buzz = checkBuzz(n);
-            duck = checkDuck(n);
-            pal = checkPal(n);
-            gapful = checkGapful(n);
             spy = checkSpy(n);
-            sunny = checkSunny(n);
+            pal = checkPal(n);
+            duck = checkDuck(n);
+            gapful = checkGapful(n);
             square = checkSquare(n);
+            sunny = checkSunny(n);
         }
         printRes(n, even, odd, buzz, duck, pal, gapful, spy, sunny, square);
         return true;
@@ -111,12 +111,12 @@ public class AmazingNumbers {
         while (i < m) {
             even = n % 2 == 0;
             buzz = checkBuzz(n);
+            spy = checkSpy(n);
             duck = checkDuck(n);
             pal = checkPal(n);
             gapful = checkGapful(n);
-            spy = checkSpy(n);
-            sunny = checkSunny(n);
             square = checkSquare(n);
+            sunny = checkSunny(n);
             System.out.println(propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square));
             n++;
             i++;
@@ -150,18 +150,18 @@ public class AmazingNumbers {
             str = new StringBuilder("The property [] is wrong.");
             str.insert(14, property.toString().toUpperCase());
             System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
             return true;
         }
         while (i < m) {
             even = n % 2 == 0;
             buzz = checkBuzz(n);
+            spy = checkSpy(n);
             duck = checkDuck(n);
             pal = checkPal(n);
             gapful = checkGapful(n);
-            spy = checkSpy(n);
-            sunny = checkSunny(n);
             square = checkSquare(n);
+            sunny = checkSunny(n);
             str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square);
             if (str.toString().contains(property)) {
                 System.out.println(str);
@@ -202,17 +202,23 @@ public class AmazingNumbers {
             System.out.println("The second parameter should be a natural number or zero.");
             return true;
         }
-        if (!validProperty(property1)) {
+        if (!validProperty(property1) && !validProperty(property2)) {
+            str = new StringBuilder("The properties [] are wrong.");
+            str.insert(16, property1.toString().toUpperCase() + ", " + property2.toString().toUpperCase());
+            System.out.println(str);
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
+            return true;
+        } else if (!validProperty(property1)) {
             str = new StringBuilder("The property [] is wrong.");
             str.insert(14, property1.toString().toUpperCase());
             System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
             return true;
         } else if (!validProperty(property2)) {
             str = new StringBuilder("The property [] is wrong.");
             str.insert(14, property2.toString().toUpperCase());
             System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
             return true;
         }
         if (exclusiveProperties(property1.toString(), property2.toString())) {
@@ -224,12 +230,12 @@ public class AmazingNumbers {
         while (i < m) {
             even = n % 2 == 0;
             buzz = checkBuzz(n);
+            spy = checkSpy(n);
             duck = checkDuck(n);
             pal = checkPal(n);
             gapful = checkGapful(n);
-            spy = checkSpy(n);
-            sunny = checkSunny(n);
             square = checkSquare(n);
+            sunny = checkSunny(n);
             str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square);
             if (str.toString().contains(property1) && str.toString().contains(property2)) {
                 System.out.println(str);
@@ -315,14 +321,9 @@ public class AmazingNumbers {
         return checkSquare(m);
     }
     public static boolean checkSquare(long n) {
-        long i = 1;
-        while (i * i <= n ) {
-            if (i * i == n) {
-                return true;
-            }
-            i++;
-        }
-        return false;
+        double doubleSquare = Math.sqrt((double) n);
+        long longSquare = (long) Math.sqrt(n);
+        return doubleSquare == (double) longSquare || n == 1;
     }
 
     public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square) {
@@ -363,8 +364,7 @@ public class AmazingNumbers {
         }
         if (sunny) {
             str.append(", sunny");
-        }
-        if (square) {
+        } else if (square) {
             str.append(", square");
         }
         return str;
