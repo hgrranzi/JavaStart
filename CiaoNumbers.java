@@ -76,6 +76,14 @@ public class CiaoNumbers {
         boolean gapful = false;
         long i = 0;
 
+        if (n < 0) {
+            System.out.println("The first parameter should be a natural number or zero.");
+            return true;
+        }
+        if (m < 0) {
+            System.out.println("The second parameter should be a natural number or zero.");
+            return true;
+        }
         while (i < m) {
             if (n % 2 == 0) {
                 even = true;
