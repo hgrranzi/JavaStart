@@ -25,6 +25,7 @@ public class AmazingNumbers {
         System.out.println("Enter two natural numbers to obtain the properties of the list:");
         System.out.println(" - the first parameter represents a starting number;");
         System.out.println(" - the second parameter shows how many consecutive numbers are to be printed;");
+        System.out.println("Enter two natural numbers and a property to search for;");
         System.out.println("Enter 0 to exit.");
         System.out.println();
     }
@@ -49,6 +50,7 @@ public class AmazingNumbers {
         boolean duck;
         boolean pal;
         boolean gapful;
+        boolean spy;
 
         if (n < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
@@ -63,8 +65,9 @@ public class AmazingNumbers {
             duck = checkDuck(n);
             pal = checkPal(n);
             gapful = checkGapful(n);
+            spy = checkSpy(n);
         }
-        printRes(n, even, odd, buzz, duck, pal, gapful);
+        printRes(n, even, odd, buzz, duck, pal, gapful, spy);
         return true;
     }
 
@@ -74,6 +77,7 @@ public class AmazingNumbers {
         boolean duck;
         boolean pal;
         boolean gapful;
+        boolean spy;
         long i = 0;
 
         if (n < 0) {
@@ -90,7 +94,8 @@ public class AmazingNumbers {
             duck = checkDuck(n);
             pal = checkPal(n);
             gapful = checkGapful(n);
-            printResOfListMember(n, even, buzz, duck, pal, gapful);
+            spy = checkSpy(n);
+            printResOfListMember(n, even, buzz, duck, pal, gapful, spy);
             n++;
             i++;
         }
@@ -148,7 +153,21 @@ public class AmazingNumbers {
         return gapful;
     }
 
-    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful) {
+    public static boolean checkSpy(long n) {
+        boolean spy;
+        long sum = 0;
+        long product = 1;
+        long tmp = n;
+        while (tmp > 0) {
+            sum += tmp % 10;
+            product *= tmp % 10;
+            tmp = tmp / 10;
+        }
+        spy = sum == product;
+        return spy;
+    }
+
+    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy) {
         System.out.println("Properties of " + n);
         System.out.println("even: " + even);
         System.out.println("odd: " + odd);
@@ -156,10 +175,11 @@ public class AmazingNumbers {
         System.out.println("duck: " + duck);
         System.out.println("palindromic: " + pal);
         System.out.println("gapful: " + gapful);
+        System.out.println("spy: " + spy);
         System.out.println();
     }
 
-    public static void printResOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful) {
+    public static void printResOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy) {
         String str = n + " is ";
         if (even) {
             str = str + "even";
@@ -177,6 +197,9 @@ public class AmazingNumbers {
         }
         if (gapful) {
             str = str + ", gapful";
+        }
+        if (spy) {
+            str = str + ", spy";
         }
         System.out.println(str);
     }
