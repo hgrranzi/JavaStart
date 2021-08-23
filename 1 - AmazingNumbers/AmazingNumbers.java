@@ -67,6 +67,7 @@ public class AmazingNumbers {
         boolean spy;
         boolean sunny;
         boolean square;
+        boolean jumping;
 
         if (n < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
@@ -84,8 +85,9 @@ public class AmazingNumbers {
             gapful = checkGapful(n);
             square = checkSquare(n);
             sunny = checkSunny(n);
+            jumping = checkJumping(n);
         }
-        printRes(n, even, odd, buzz, duck, pal, gapful, spy, sunny, square);
+        printRes(n, even, odd, buzz, duck, pal, gapful, spy, sunny, square, jumping);
         return true;
     }
 
@@ -98,6 +100,7 @@ public class AmazingNumbers {
         boolean spy;
         boolean sunny;
         boolean square;
+        boolean jumping;
         long i = 0;
 
         if (n < 0) {
@@ -117,7 +120,8 @@ public class AmazingNumbers {
             gapful = checkGapful(n);
             square = checkSquare(n);
             sunny = checkSunny(n);
-            System.out.println(propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square));
+            jumping = checkJumping(n);
+            System.out.println(propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping));
             n++;
             i++;
         }
@@ -134,6 +138,7 @@ public class AmazingNumbers {
         boolean spy;
         boolean sunny;
         boolean square;
+        boolean jumping;
         long i = 0;
         StringBuilder str;
         String prop = property.toString().toLowerCase();
@@ -150,7 +155,7 @@ public class AmazingNumbers {
             str = new StringBuilder("The property [] is wrong.");
             str.insert(14, property.toString().toUpperCase());
             System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE, JUMPING]");
             return true;
         }
         while (i < m) {
@@ -162,7 +167,8 @@ public class AmazingNumbers {
             gapful = checkGapful(n);
             square = checkSquare(n);
             sunny = checkSunny(n);
-            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square);
+            jumping = checkJumping(n);
+            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping);
             if (str.toString().contains(property)) {
                 System.out.println(str);
                 i++;
@@ -175,7 +181,9 @@ public class AmazingNumbers {
 
     public static boolean validProperty(StringBuilder property) {
         String prop = property.toString();
-        return "even".equals(prop) || "odd".equals(prop) || "buzz".equals(prop) || "duck".equals(prop) || "palindromic".equals(prop) || "gapful".equals(prop) || "spy".equals(prop) || "sunny".equals(prop) || "square".equals(prop);
+        return "even".equals(prop) || "odd".equals(prop) || "buzz".equals(prop) || "duck".equals(prop) ||
+                "palindromic".equals(prop) || "gapful".equals(prop) || "spy".equals(prop) || "sunny".equals(prop) ||
+                "square".equals(prop) || "jumping".equals(prop);
     }
 
     public static boolean checkTwoProperties(long n, long m, StringBuilder property1, StringBuilder property2) {
@@ -187,6 +195,7 @@ public class AmazingNumbers {
         boolean spy;
         boolean sunny;
         boolean square;
+        boolean jumping;
         StringBuilder str;
         String prop1 = property1.toString().toLowerCase();
         String prop2 = property2.toString().toLowerCase();
@@ -236,7 +245,8 @@ public class AmazingNumbers {
             gapful = checkGapful(n);
             square = checkSquare(n);
             sunny = checkSunny(n);
-            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square);
+            jumping = checkJumping(n);
+            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping);
             if (str.toString().contains(property1) && str.toString().contains(property2)) {
                 System.out.println(str);
                 i++;
@@ -326,7 +336,22 @@ public class AmazingNumbers {
         return doubleSquare == (double) longSquare || n == 1;
     }
 
-    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square) {
+    public static boolean checkJumping(long n) {
+        boolean jumping = true;
+        long digit = n % 10;
+        n = n / 10;
+        while (n > 0) {
+            if (digit + 1 != n % 10 && digit - 1 != n % 10) {
+                jumping = false;
+                break;
+            }
+            digit = n % 10;
+            n = n / 10;
+        }
+        return jumping;
+    }
+
+    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square, boolean jumping) {
         System.out.println("Properties of " + n);
         System.out.println("even: " + even);
         System.out.println("odd: " + odd);
@@ -337,10 +362,11 @@ public class AmazingNumbers {
         System.out.println("spy: " + spy);
         System.out.println("sunny: " + sunny);
         System.out.println("square: " + square);
+        System.out.println("jumping: " + jumping);
         System.out.println();
     }
 
-    public static StringBuilder propertyOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square) {
+    public static StringBuilder propertyOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square, boolean jumping) {
         StringBuilder str = new StringBuilder(n + " is ");
         if (even) {
             str.append("even");
@@ -366,6 +392,9 @@ public class AmazingNumbers {
             str.append(", sunny");
         } else if (square) {
             str.append(", square");
+        }
+        if (jumping) {
+            str.append(", jumping");
         }
         return str;
     }
