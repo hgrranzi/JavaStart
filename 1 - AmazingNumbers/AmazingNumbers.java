@@ -25,8 +25,7 @@ public class AmazingNumbers {
         System.out.println("Enter two natural numbers to obtain the properties of the list:");
         System.out.println(" - the first parameter represents a starting number;");
         System.out.println(" - the second parameter shows how many consecutive numbers are to be printed;");
-        System.out.println("Enter two natural numbers and a property to search for;");
-        System.out.println("Enter two natural numbers and two properties to search for;");
+        System.out.println("Enter two natural numbers and properties to search for;");
         System.out.println("Enter 0 to exit.");
         System.out.println();
     }
@@ -34,25 +33,25 @@ public class AmazingNumbers {
     public static boolean checkRequest(String[] request) {
         long n = Long.parseLong(request[0], 10);
         long m;
-        StringBuilder property1;
-        StringBuilder property2;
+        int numberOfProperties;
+        StringBuilder[] properties;
 
-        if (request.length == 4) {
+        if (request.length == 1) {
+            if (n != 0) {
+                return checkNumber(n);
+            }
+        }   else {
             m = Long.parseLong(request[1], 10);
-            property1 = new StringBuilder(request[2]);
-            property2 = new StringBuilder(request[3]);
-            return checkTwoProperties(n, m, property1, property2);
-        }
-        if (request.length == 3) {
-            m = Long.parseLong(request[1], 10);
-            property1 = new StringBuilder(request[2]);
-            return checkProperty(n, m, property1);
-        }
-        if (request.length == 2) {
-            m = Long.parseLong(request[1], 10);
-            return checkList(n, m);
-        } else if (n != 0) {
-            return checkNumber(n);
+            if (request.length == 2) {
+                return checkList(n, m);
+            } else {
+                numberOfProperties = request.length - 2;
+                properties = new StringBuilder[numberOfProperties];
+                for (int i = 0; i < numberOfProperties; i++) {
+                    properties[i] = new StringBuilder(request[i + 2].toUpperCase());
+                }
+                return checkProperties(n, m, properties);
+            }
         }
         return false;
     }
@@ -129,64 +128,95 @@ public class AmazingNumbers {
         return true;
     }
 
-    public static boolean checkProperty(long n, long m, StringBuilder property) {
-        boolean even;
-        boolean buzz;
-        boolean duck;
-        boolean pal;
-        boolean gapful;
-        boolean spy;
-        boolean sunny;
-        boolean square;
-        boolean jumping;
-        long i = 0;
-        StringBuilder str;
-        String prop = property.toString().toLowerCase();
-        property = new StringBuilder(prop);
-        if (n < 0) {
-            System.out.println("The first parameter should be a natural number or zero.");
-            return true;
+    public static boolean validProperty(StringBuilder property) {
+        String prop = property.toString();
+        return "EVEN".equals(prop) || "ODD".equals(prop) || "BUZZ".equals(prop) || "DUCK".equals(prop) ||
+                "PALINDROMIC".equals(prop) || "GAPFUL".equals(prop) || "SPY".equals(prop) || "SUNNY".equals(prop) ||
+                "SQUARE".equals(prop) || "JUMPING".equals(prop);
+    }
+
+    public static boolean propertiesAreWrong(StringBuilder[] properties) {
+        StringBuilder strError;
+        StringBuilder wrongProperties = new StringBuilder("");
+        int numberOfWrongProperties = 0;
+
+        for (StringBuilder property : properties) {
+            if (!validProperty(property)) {
+                if (wrongProperties.length() != 0) {
+                    wrongProperties.append(", ");
+                }
+                wrongProperties.append(property);
+                numberOfWrongProperties++;
+            }
         }
-        if (m < 0) {
-            System.out.println("The second parameter should be a natural number or zero.");
-            return true;
-        }
-        if (!validProperty(property)) {
-            str = new StringBuilder("The property [] is wrong.");
-            str.insert(14, property.toString().toUpperCase());
-            System.out.println(str);
+        if (wrongProperties.length() > 0) {
+            if (numberOfWrongProperties > 1) {
+                strError = new StringBuilder("The properties [] are wrong.");
+                strError.insert(16, wrongProperties.toString());
+            } else {
+                strError = new StringBuilder("The property [] is wrong.");
+                strError.insert(14, wrongProperties.toString());
+            }
+            System.out.println(strError);
             System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE, JUMPING]");
             return true;
         }
-        while (i < m) {
-            even = n % 2 == 0;
-            buzz = checkBuzz(n);
-            spy = checkSpy(n);
-            duck = checkDuck(n);
-            pal = checkPal(n);
-            gapful = checkGapful(n);
-            square = checkSquare(n);
-            sunny = checkSunny(n);
-            jumping = checkJumping(n);
-            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping);
-            if (str.toString().contains(property)) {
-                System.out.println(str);
-                i++;
+        return false;
+    }
+
+    public static boolean propertiesAreExclusive(StringBuilder[] properties) {
+
+        int propEvenOdd = 0;
+        int propDuckSpy = 0;
+        int propSquareSunny = 0;
+
+        for (StringBuilder property : properties) {
+            switch (property.toString()) {
+                case "EVEN":
+                    propEvenOdd++;
+                    break;
+                case "ODD":
+                    propEvenOdd++;
+                    break;
+                case "DUCK":
+                    propDuckSpy++;
+                    break;
+                case "SPY":
+                    propDuckSpy++;
+                    break;
+                case "SQUARE":
+                    propSquareSunny++;
+                    break;
+                case "SUNNY":
+                    propSquareSunny++;
+                    break;
             }
-            n++;
+            if (propEvenOdd > 1) {
+                System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]\nThere are no numbers with these properties.");
+                return true;
+            }
+            if (propDuckSpy > 1) {
+                System.out.println("The request contains mutually exclusive properties: [DUCK, SPY]\nThere are no numbers with these properties.");
+                return true;
+            }
+            if (propSquareSunny > 1) {
+                System.out.println("The request contains mutually exclusive properties: [SQUARE, SUNNY]\nThere are no numbers with these properties.");
+                return true;
+            }
         }
-        System.out.println();
+        return false;
+    }
+
+    public static boolean hasProperties(StringBuilder str, StringBuilder[] properties) {
+        for (StringBuilder property : properties) {
+            if (!str.toString().contains(property.toString().toLowerCase())) {
+                return false;
+            }
+        }
         return true;
     }
 
-    public static boolean validProperty(StringBuilder property) {
-        String prop = property.toString();
-        return "even".equals(prop) || "odd".equals(prop) || "buzz".equals(prop) || "duck".equals(prop) ||
-                "palindromic".equals(prop) || "gapful".equals(prop) || "spy".equals(prop) || "sunny".equals(prop) ||
-                "square".equals(prop) || "jumping".equals(prop);
-    }
-
-    public static boolean checkTwoProperties(long n, long m, StringBuilder property1, StringBuilder property2) {
+    public static boolean checkProperties(long n, long m, StringBuilder[] properties) {
         boolean even;
         boolean buzz;
         boolean duck;
@@ -197,43 +227,20 @@ public class AmazingNumbers {
         boolean square;
         boolean jumping;
         StringBuilder str;
-        String prop1 = property1.toString().toLowerCase();
-        String prop2 = property2.toString().toLowerCase();
-        property1 = new StringBuilder(prop1);
-        property2 = new StringBuilder(prop2);
-        long i = 0;
+        int i = 0;
 
         if (n < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
             return true;
         }
         if (m < 0) {
-            System.out.println("The second parameter should be a natural number or zero.");
+            System.out.println("The second parameter should be a natural number.");
             return true;
         }
-        if (!validProperty(property1) && !validProperty(property2)) {
-            str = new StringBuilder("The properties [] are wrong.");
-            str.insert(16, property1.toString().toUpperCase() + ", " + property2.toString().toUpperCase());
-            System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
-            return true;
-        } else if (!validProperty(property1)) {
-            str = new StringBuilder("The property [] is wrong.");
-            str.insert(14, property1.toString().toUpperCase());
-            System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
-            return true;
-        } else if (!validProperty(property2)) {
-            str = new StringBuilder("The property [] is wrong.");
-            str.insert(14, property2.toString().toUpperCase());
-            System.out.println(str);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE]");
+        if (propertiesAreWrong(properties)) {
             return true;
         }
-        if (exclusiveProperties(property1.toString(), property2.toString())) {
-            str = new StringBuilder("The request contains mutually exclusive properties: []\nThere are no numbers with these properties.");
-            str.insert(53, property1.toString().toUpperCase() + ", " + property2.toString().toUpperCase());
-            System.out.println(str);
+        if (properties.length > 1 && propertiesAreExclusive(properties)) {
             return true;
         }
         while (i < m) {
@@ -247,7 +254,7 @@ public class AmazingNumbers {
             sunny = checkSunny(n);
             jumping = checkJumping(n);
             str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping);
-            if (str.toString().contains(property1) && str.toString().contains(property2)) {
+            if (hasProperties(str, properties)) {
                 System.out.println(str);
                 i++;
             }
@@ -255,12 +262,6 @@ public class AmazingNumbers {
         }
         System.out.println();
         return true;
-    }
-
-    public static boolean exclusiveProperties(String property1, String property2) {
-        return "even".equals(property1) && "odd".equals(property2) || "even".equals(property2) && "odd".equals(property1)
-                || "duck".equals(property1) && "spy".equals(property2) || "spy".equals(property1) && "duck".equals(property2)
-                || "square".equals(property1) && "sunny".equals(property2) || "sunny".equals(property1) && "square".equals(property2);
     }
 
     public static boolean checkBuzz(long n) {
