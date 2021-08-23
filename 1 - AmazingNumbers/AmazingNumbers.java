@@ -232,7 +232,7 @@ public class AmazingNumbers {
         }
         if (exclusiveProperties(property1.toString(), property2.toString())) {
             str = new StringBuilder("The request contains mutually exclusive properties: []\nThere are no numbers with these properties.");
-            str.insert(54, property1.toString().toUpperCase() + ", " + property2.toString().toUpperCase());
+            str.insert(53, property1.toString().toUpperCase() + ", " + property2.toString().toUpperCase());
             System.out.println(str);
             return true;
         }
