@@ -140,7 +140,7 @@ public class AmazingNumbers {
         String prop = property.toString();
         return "EVEN".equals(prop) || "ODD".equals(prop) || "BUZZ".equals(prop) || "DUCK".equals(prop) ||
                 "PALINDROMIC".equals(prop) || "GAPFUL".equals(prop) || "SPY".equals(prop) || "SUNNY".equals(prop) ||
-                "SQUARE".equals(prop) || "JUMPING".equals(prop);
+                "SQUARE".equals(prop) || "JUMPING".equals(prop) || "HAPPY".equals(prop) || "SAD".equals(prop);
     }
 
     public static boolean propertiesAreWrong(StringBuilder[] properties) {
@@ -177,6 +177,7 @@ public class AmazingNumbers {
         int propEvenOdd = 0;
         int propDuckSpy = 0;
         int propSquareSunny = 0;
+        int propHappySad = 0;
 
         for (StringBuilder property : properties) {
             switch (property.toString()) {
@@ -198,6 +199,12 @@ public class AmazingNumbers {
                 case "SUNNY":
                     propSquareSunny++;
                     break;
+                case "HAPPY":
+                    propHappySad++;
+                    break;
+                case "SAD":
+                    propHappySad++;
+                    break;
             }
             if (propEvenOdd > 1) {
                 System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]\nThere are no numbers with these properties.");
@@ -209,6 +216,10 @@ public class AmazingNumbers {
             }
             if (propSquareSunny > 1) {
                 System.out.println("The request contains mutually exclusive properties: [SQUARE, SUNNY]\nThere are no numbers with these properties.");
+                return true;
+            }
+            if (propHappySad > 1) {
+                System.out.println("The request contains mutually exclusive properties: [HAPPY, SAD]\nThere are no numbers with these properties.");
                 return true;
             }
         }
