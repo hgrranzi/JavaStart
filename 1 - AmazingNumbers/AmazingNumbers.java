@@ -26,6 +26,7 @@ public class AmazingNumbers {
         System.out.println(" - the first parameter represents a starting number;");
         System.out.println(" - the second parameter shows how many consecutive numbers are to be printed;");
         System.out.println("Enter two natural numbers and properties to search for;");
+        System.out.println("A property preceded by minus must not be present in numbers;");
         System.out.println("Enter 0 to exit.");
         System.out.println();
     }
@@ -140,7 +141,10 @@ public class AmazingNumbers {
         String prop = property.toString();
         return "EVEN".equals(prop) || "ODD".equals(prop) || "BUZZ".equals(prop) || "DUCK".equals(prop) ||
                 "PALINDROMIC".equals(prop) || "GAPFUL".equals(prop) || "SPY".equals(prop) || "SUNNY".equals(prop) ||
-                "SQUARE".equals(prop) || "JUMPING".equals(prop) || "HAPPY".equals(prop) || "SAD".equals(prop);
+                "SQUARE".equals(prop) || "JUMPING".equals(prop) || "HAPPY".equals(prop) || "SAD".equals(prop) ||
+                "-EVEN".equals(prop) || "-ODD".equals(prop) || "-BUZZ".equals(prop) || "-DUCK".equals(prop) ||
+                "-PALINDROMIC".equals(prop) || "-GAPFUL".equals(prop) || "-SPY".equals(prop) || "-SUNNY".equals(prop) ||
+                "-SQUARE".equals(prop) || "-JUMPING".equals(prop) || "-HAPPY".equals(prop) || "-SAD".equals(prop);
     }
 
     public static boolean propertiesAreWrong(StringBuilder[] properties) {
@@ -166,61 +170,47 @@ public class AmazingNumbers {
                 strError.insert(14, wrongProperties.toString());
             }
             System.out.println(strError);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE, JUMPING]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD, SUNNY, SQUARE, JUMPING, HAPPY, SAD]");
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean areExclusive(StringBuilder prop1, StringBuilder prop2) {
+        if (prop1.toString().equals(prop2.toString())) {
+            return false;
+        }
+        if (!prop1.toString().startsWith("-") && prop2.toString().startsWith("-") && prop1.toString().equals(prop2.toString().substring(1))
+        || !prop2.toString().startsWith("-") && prop1.toString().startsWith("-") && prop2.toString().equals(prop1.toString().substring(1))) {
+            return true;
+        }
+        if (prop1.toString().equals("ODD") && prop2.toString().equals("EVEN") || prop1.toString().equals("EVEN") && prop2.toString().equals("ODD")
+                || prop1.toString().equals("DUCK") && prop2.toString().equals("SPY") || prop1.toString().equals("SPY") && prop2.toString().equals("DUCK")
+                || prop1.toString().equals("SUNNY") && prop2.toString().equals("SQUARE") || prop1.toString().equals("SQUARE") && prop2.toString().equals("SUNNY")
+                || prop1.toString().equals("SAD") && prop2.toString().equals("HAPPY") || prop1.toString().equals("HAPPY") && prop2.toString().equals("SAD")) {
+            return true;
+        }
+        if (prop1.toString().equals("-ODD") && prop2.toString().equals("-EVEN") || prop1.toString().equals("-EVEN") && prop2.toString().equals("-ODD")
+                || prop1.toString().equals("-DUCK") && prop2.toString().equals("-SPY") || prop1.toString().equals("-SPY") && prop2.toString().equals("-DUCK")
+                || prop1.toString().equals("-SAD") && prop2.toString().equals("-HAPPY") || prop1.toString().equals("-HAPPY") && prop2.toString().equals("-SAD")) {
             return true;
         }
         return false;
     }
 
     public static boolean propertiesAreExclusive(StringBuilder[] properties) {
+        StringBuilder str;
+        StringBuilder wrongProperties;
 
-        int propEvenOdd = 0;
-        int propDuckSpy = 0;
-        int propSquareSunny = 0;
-        int propHappySad = 0;
-
-        for (StringBuilder property : properties) {
-            switch (property.toString()) {
-                case "EVEN":
-                    propEvenOdd++;
-                    break;
-                case "ODD":
-                    propEvenOdd++;
-                    break;
-                case "DUCK":
-                    propDuckSpy++;
-                    break;
-                case "SPY":
-                    propDuckSpy++;
-                    break;
-                case "SQUARE":
-                    propSquareSunny++;
-                    break;
-                case "SUNNY":
-                    propSquareSunny++;
-                    break;
-                case "HAPPY":
-                    propHappySad++;
-                    break;
-                case "SAD":
-                    propHappySad++;
-                    break;
-            }
-            if (propEvenOdd > 1) {
-                System.out.println("The request contains mutually exclusive properties: [EVEN, ODD]\nThere are no numbers with these properties.");
-                return true;
-            }
-            if (propDuckSpy > 1) {
-                System.out.println("The request contains mutually exclusive properties: [DUCK, SPY]\nThere are no numbers with these properties.");
-                return true;
-            }
-            if (propSquareSunny > 1) {
-                System.out.println("The request contains mutually exclusive properties: [SQUARE, SUNNY]\nThere are no numbers with these properties.");
-                return true;
-            }
-            if (propHappySad > 1) {
-                System.out.println("The request contains mutually exclusive properties: [HAPPY, SAD]\nThere are no numbers with these properties.");
-                return true;
+        for (int i = 0; i < properties.length; i++) {
+            for (int j = i; j < properties.length; j++) {
+                if (areExclusive(properties[i], properties[j])) {
+                    wrongProperties = new StringBuilder(properties[i] + ", " + properties[j]);
+                    str = new StringBuilder("The request contains mutually exclusive properties: []\nThere are no numbers with these properties.");
+                    str.insert(53, wrongProperties);
+                    System.out.println(str);
+                    return true;
+                }
             }
         }
         return false;
@@ -228,7 +218,8 @@ public class AmazingNumbers {
 
     public static boolean hasProperties(StringBuilder str, StringBuilder[] properties) {
         for (StringBuilder property : properties) {
-            if (!str.toString().contains(property.toString().toLowerCase())) {
+            if (!property.toString().startsWith("-") && !str.toString().contains(property.toString().toLowerCase())
+                    || property.toString().startsWith("-") && str.toString().contains(property.toString().substring(1).toLowerCase())) {
                 return false;
             }
         }
