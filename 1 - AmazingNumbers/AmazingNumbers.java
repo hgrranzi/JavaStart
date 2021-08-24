@@ -67,6 +67,8 @@ public class AmazingNumbers {
         boolean sunny;
         boolean square;
         boolean jumping;
+        boolean happy;
+        boolean sad = false;
 
         if (n < 0) {
             System.out.println("The first parameter should be a natural number or zero.");
@@ -85,8 +87,12 @@ public class AmazingNumbers {
             square = checkSquare(n);
             sunny = checkSunny(n);
             jumping = checkJumping(n);
+            happy = checkHappy(n);
+            if (!happy) {
+                sad = true;
+            }
         }
-        printRes(n, even, odd, buzz, duck, pal, gapful, spy, sunny, square, jumping);
+        printRes(n, even, odd, buzz, duck, pal, gapful, spy, sunny, square, jumping, happy, sad);
         return true;
     }
 
@@ -100,6 +106,7 @@ public class AmazingNumbers {
         boolean sunny;
         boolean square;
         boolean jumping;
+        boolean happy;
         long i = 0;
 
         if (n < 0) {
@@ -120,7 +127,8 @@ public class AmazingNumbers {
             square = checkSquare(n);
             sunny = checkSunny(n);
             jumping = checkJumping(n);
-            System.out.println(propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping));
+            happy = checkHappy(n);
+            System.out.println(propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping, happy));
             n++;
             i++;
         }
@@ -226,6 +234,7 @@ public class AmazingNumbers {
         boolean sunny;
         boolean square;
         boolean jumping;
+        boolean happy;
         StringBuilder str;
         int i = 0;
 
@@ -253,7 +262,8 @@ public class AmazingNumbers {
             square = checkSquare(n);
             sunny = checkSunny(n);
             jumping = checkJumping(n);
-            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping);
+            happy = checkHappy(n);
+            str = propertyOfListMember(n, even, buzz, duck, pal, gapful, spy, sunny, square, jumping, happy);
             if (hasProperties(str, properties)) {
                 System.out.println(str);
                 i++;
@@ -352,7 +362,25 @@ public class AmazingNumbers {
         return jumping;
     }
 
-    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square, boolean jumping) {
+    public static long sumOfSquares(long n) {
+        long sum = 0;
+        while (n > 0) {
+            sum += (n % 10) * (n % 10);
+            n /= 10;
+        }
+        return sum;
+    }
+
+    public static boolean checkHappy(long n) {
+        for (long number = sumOfSquares(n); number != 1; number = sumOfSquares(number)) {
+            if (number > 1 && number <= 4) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void printRes(long n, boolean even, boolean odd, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square, boolean jumping, boolean happy, boolean sad) {
         System.out.println("Properties of " + n);
         System.out.println("even: " + even);
         System.out.println("odd: " + odd);
@@ -364,10 +392,12 @@ public class AmazingNumbers {
         System.out.println("sunny: " + sunny);
         System.out.println("square: " + square);
         System.out.println("jumping: " + jumping);
+        System.out.println("happy: " + happy);
+        System.out.println("sad: " + sad);
         System.out.println();
     }
 
-    public static StringBuilder propertyOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square, boolean jumping) {
+    public static StringBuilder propertyOfListMember(long n, boolean even, boolean buzz, boolean duck, boolean pal, boolean gapful, boolean spy, boolean sunny, boolean square, boolean jumping, boolean happy) {
         StringBuilder str = new StringBuilder(n + " is ");
         if (even) {
             str.append("even");
@@ -396,6 +426,11 @@ public class AmazingNumbers {
         }
         if (jumping) {
             str.append(", jumping");
+        }
+        if (happy) {
+            str.append(", happy");
+        } else {
+            str.append(", sad");
         }
         return str;
     }
