@@ -7,28 +7,44 @@ public class Cinema {
         char[][] scheme;
         int rows;
         int seatsInRow;
-        int totalIncome;
-        int priceFrontSeat = 10;
-        int priceBackSeat = 8;
-        int choosenRow;
-        int choosenSeat;
+        int request;
+        Statistics stat;
 
         System.out.println("Enter the number of rows:");
         rows = term.nextInt();
         System.out.println("Enter the number of seats in each row:");
         seatsInRow = term.nextInt();
+        stat = new Statistics(rows, seatsInRow);
         scheme = createScheme(rows, seatsInRow);
-        printScheme(scheme);
+
+        do {
+            System.out.println("1. Show the seats\n" + "2. Buy a ticket\n" + "3. Statistics\n" + "0. Exit");
+            request = term.nextInt();
+            switch (request) {
+                case 1:
+                    printScheme(scheme);
+                    break;
+                case 2:
+                    bookTicket(scheme, rows, seatsInRow, term);
+                    break;
+                case 3:
+                    stat.printStatistics();
+                    break;
+            }
+        } while (request != 0);
+    }
+
+    public static void bookTicket(char[][] scheme, int rows, int seatsInRow, Scanner term) {
+        int choosenRow;
+        int choosenSeat;
+
+        System.out.println();
         System.out.println("Enter a row number:");
         choosenRow = term.nextInt();
         System.out.println("Enter a seat number in that row:");
         choosenSeat = term.nextInt();
         showTicketPrice(rows, seatsInRow, choosenRow, choosenSeat);
-        //totalIncome = calculateTotalIncome(rows, seatsInRow, priceFrontSeat, priceBackSeat);
-        //printTotalIncome(totalIncome);
-
         scheme[choosenRow][choosenSeat] = 'B';
-        printScheme(scheme);
     }
 
     public static void showTicketPrice(int rows, int seats, int choosenRow, int choosenSeat) {
@@ -43,18 +59,6 @@ public class Cinema {
                 System.out.println("Ticket price: $8");
             }
         }
-    }
-
-    public static int calculateTotalIncome(int rows, int seats, int priceFront, int priceBack) {
-        int frontSeats;
-        int backSeats;
-
-        if (rows * seats <= 60) {
-            return rows * seats * priceFront;
-        }
-        frontSeats = rows / 2 * seats;
-        backSeats = rows * seats - frontSeats;
-        return (frontSeats * priceFront + backSeats * priceBack);
     }
 
     public static void printTotalIncome(int total) {
