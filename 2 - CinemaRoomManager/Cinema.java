@@ -10,16 +10,39 @@ public class Cinema {
         int totalIncome;
         int priceFrontSeat = 10;
         int priceBackSeat = 8;
+        int choosenRow;
+        int choosenSeat;
 
         System.out.println("Enter the number of rows:");
         rows = term.nextInt();
         System.out.println("Enter the number of seats in each row:");
         seatsInRow = term.nextInt();
-        totalIncome = calculateTotalIncome(rows, seatsInRow, priceFrontSeat, priceBackSeat);
-        printTotalIncome(totalIncome);
+        scheme = createScheme(rows, seatsInRow);
+        printScheme(scheme);
+        System.out.println("Enter a row number:");
+        choosenRow = term.nextInt();
+        System.out.println("Enter a seat number in that row:");
+        choosenSeat = term.nextInt();
+        showTicketPrice(rows, seatsInRow, choosenRow, choosenSeat);
+        //totalIncome = calculateTotalIncome(rows, seatsInRow, priceFrontSeat, priceBackSeat);
+        //printTotalIncome(totalIncome);
 
-        //scheme = createScheme(rows, seatsInRow);
-        //printScheme(scheme);
+        scheme[choosenRow][choosenSeat] = 'B';
+        printScheme(scheme);
+    }
+
+    public static void showTicketPrice(int rows, int seats, int choosenRow, int choosenSeat) {
+        System.out.println();
+        if (rows * seats <= 60 ) {
+            System.out.println("Ticket price: $10");
+        }
+        else {
+            if (choosenRow <= rows / 2) {
+                System.out.println("Ticket price: $10");
+            } else {
+                System.out.println("Ticket price: $8");
+            }
+        }
     }
 
     public static int calculateTotalIncome(int rows, int seats, int priceFront, int priceBack) {
@@ -60,6 +83,7 @@ public class Cinema {
     }
 
     public static void printScheme(char[][] scheme) {
+        System.out.println();
         System.out.println("Cinema:");
         for (char[] row : scheme) {
             for (char seat : row) {
@@ -67,5 +91,6 @@ public class Cinema {
             }
             System.out.println();
         }
+        System.out.println();
     }
 }
