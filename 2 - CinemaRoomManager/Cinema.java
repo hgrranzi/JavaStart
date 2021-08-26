@@ -18,14 +18,14 @@ public class Cinema {
         scheme = createScheme(rows, seatsInRow);
 
         do {
-            System.out.println("1. Show the seats\n" + "2. Buy a ticket\n" + "3. Statistics\n" + "0. Exit");
+            System.out.println("\n1. Show the seats\n" + "2. Buy a ticket\n" + "3. Statistics\n" + "0. Exit");
             request = term.nextInt();
             switch (request) {
                 case 1:
                     printScheme(scheme);
                     break;
                 case 2:
-                    bookTicket(scheme, rows, seatsInRow, term);
+                    bookTicket(scheme, rows, seatsInRow, term, stat);
                     break;
                 case 3:
                     stat.printStatistics();
@@ -34,29 +34,40 @@ public class Cinema {
         } while (request != 0);
     }
 
-    public static void bookTicket(char[][] scheme, int rows, int seatsInRow, Scanner term) {
-        int choosenRow;
-        int choosenSeat;
+    public static void bookTicket(char[][] scheme, int rows, int seatsInRow, Scanner term, Statistics stat) {
+        int chosenRow;
+        int chosenSeat;
+        int price;
 
         System.out.println();
-        System.out.println("Enter a row number:");
-        choosenRow = term.nextInt();
-        System.out.println("Enter a seat number in that row:");
-        choosenSeat = term.nextInt();
-        showTicketPrice(rows, seatsInRow, choosenRow, choosenSeat);
-        scheme[choosenRow][choosenSeat] = 'B';
+        for (boolean input = false; !input;) {
+            System.out.println("Enter a row number:");
+            chosenRow = term.nextInt();
+            System.out.println("Enter a seat number in that row:");
+            chosenSeat = term.nextInt();
+            if (chosenRow > rows || chosenSeat > seatsInRow || chosenRow < 1 || chosenSeat < 1) {
+                System.out.println("Wrong input!\n");
+            } else if (scheme[chosenRow][chosenSeat] == 'B') {
+                System.out.println("That ticket has already been purchased!\n");
+            } else {
+                price = getTicketPrice(rows, seatsInRow, chosenRow);
+                System.out.printf("\nTicket price: $%d\n", price);
+                stat.updateStatistics(price);
+                scheme[chosenRow][chosenSeat] = 'B';
+                input = true;
+            }
+        }
     }
 
-    public static void showTicketPrice(int rows, int seats, int choosenRow, int choosenSeat) {
-        System.out.println();
+    public static int getTicketPrice(int rows, int seats, int chosenRow) {
         if (rows * seats <= 60 ) {
-            System.out.println("Ticket price: $10");
+            return 10;
         }
         else {
-            if (choosenRow <= rows / 2) {
-                System.out.println("Ticket price: $10");
+            if (chosenRow <= rows / 2) {
+                return 10;
             } else {
-                System.out.println("Ticket price: $8");
+                return 8;
             }
         }
     }
