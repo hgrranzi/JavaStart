@@ -1,24 +1,57 @@
+import java.util.*;
+
 public class Machine {
-    static final int waterForCup = 200;
-    static final int milkForCup = 50;
-    static final int beansForCup = 15;
     private int water;
     private int milk;
     private int beans;
+    private int disposableCups;
+    private int money;
 
-    public void setWater(int water) {
-        this.water = water;
+    Machine() {
+        this.water = 400;
+        this.milk = 540;
+        this.beans = 120;
+        this.disposableCups = 9;
+        this.money = 550;
     }
 
-    public void setMilk(int milk) {
-        this.milk = milk;
+    public void make(int type) {
+        CoffeeType coffee = CoffeeType.values()[type];
+        this.disposableCups--;
+        this.water -= coffee.getWater();
+        this.milk -= coffee.getMilk();
+        this.beans -= coffee.getBeans();
+        this.money += coffee.getPrice();
     }
 
-    public void setBeans(int beans) {
-        this.beans = beans;
+    public void fill() {
+        Scanner term = new Scanner(System.in);
+
+        System.out.println("Write how many ml of water you want to add:");
+        this.water += term.nextInt();
+        System.out.println("Write how many ml of milk you want to add:");
+        this.milk += term.nextInt();
+        System.out.println("Write how many grams of coffee beans you want to add:");
+        this.beans += term.nextInt();
+        System.out.println("Write how many disposable cups of coffee you want to add:");
+        this.disposableCups += term.nextInt();
     }
 
-    public void ableToMake(int amount) {
+    public void take() {
+        System.out.printf("I gave you $%d\n", this.money);
+        this.money = 0;
+    }
+
+    public void printState() {
+        System.out.printf("The coffee machine has:\n");
+        System.out.printf("%d ml of water\n", this.water);
+        System.out.printf("%d ml of milk\n", this.milk);
+        System.out.printf("%d g of coffee beans\n", this.beans);
+        System.out.printf("%d disposable cups\n", this.disposableCups);
+        System.out.printf("$%d of money\n", this.money);
+    }
+
+    /*public void ableToMake(int amount) {
         int ability;
 
         ability = minFromThree(this.water / waterForCup, this.milk / milkForCup, this.beans / beansForCup);
@@ -30,8 +63,7 @@ public class Machine {
         } else {
             System.out.printf("No, I can make only %d cup(s) of coffee\n", ability);
         }
-
-    }
+    }*/
 
     public static int minFromThree(int a, int b, int c) {
         if (a <= b && a <= c) {
@@ -42,4 +74,5 @@ public class Machine {
             return c;
         }
     }
+
 }
