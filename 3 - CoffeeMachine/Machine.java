@@ -17,11 +17,22 @@ public class Machine {
 
     public void make(int type) {
         CoffeeType coffee = CoffeeType.values()[type];
-        this.disposableCups--;
-        this.water -= coffee.getWater();
-        this.milk -= coffee.getMilk();
-        this.beans -= coffee.getBeans();
-        this.money += coffee.getPrice();
+        if (this.water < coffee.getWater()) {
+            System.out.println("Sorry, not enough water!");
+        } else if (this.milk < coffee.getMilk()) {
+            System.out.println("Sorry, not enough milk!");
+        } else if (this.beans < coffee.getBeans()) {
+            System.out.println("Sorry, not enough beans!");
+        } else if (this.disposableCups < 1) {
+            System.out.println("Sorry, not enough disposable cups!");
+        } else {
+            System.out.println("I have enough resources, making you a coffee!");
+            this.disposableCups--;
+            this.water -= coffee.getWater();
+            this.milk -= coffee.getMilk();
+            this.beans -= coffee.getBeans();
+            this.money += coffee.getPrice();
+        }
     }
 
     public void fill() {
