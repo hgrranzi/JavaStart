@@ -6,21 +6,21 @@ public class CoffeeMachine {
         Machine coffeeMaker = new Machine();
         String action;
 
-        coffeeMaker.printState();
-        System.out.println();
-        System.out.println("Write action (buy, fill, take):");
-        action = term.nextLine();
-        if ("buy".equals(action)) {
-            System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
-            int option = term.nextInt();
-            coffeeMaker.make(option - 1);
-        } else if ("fill".equals(action)) {
-            coffeeMaker.fill();
-        } else if ("take".equals(action)) {
-            coffeeMaker.take();
-        }
-        System.out.println();
-        coffeeMaker.printState();
+        do {
+            System.out.println("Write action (buy, fill, take, remaining, exit):");
+            action = term.nextLine();
+            if ("buy".equals(action)) {
+                System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
+                int option = term.nextInt();
+                coffeeMaker.make(option - 1);
+            } else if ("fill".equals(action)) {
+                coffeeMaker.fill();
+            } else if ("take".equals(action)) {
+                coffeeMaker.take();
+            } else if ("remaining".equals(action)) {
+                coffeeMaker.printState();
+            }
+        } while (!"exit". equals(action));
     }
 
     public static void calculateAndPrintIngredients(int cups) {
