@@ -21,3 +21,7 @@ input and output, multi-dimensional arrays, loops, conditions
 ### 3 - CoffeeMachine
 
 loops, conditions, practice working with classes
+
+### 4 - BullsAndCows
+
+integer arithmetic, random numbers generating, storing data, handling errors
