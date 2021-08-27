@@ -1,4 +1,4 @@
-# StartJava
+# JavaStart
 
 The beginning of my journey to the Java world
 
@@ -8,4 +8,16 @@ IN PROGRESS
 
 ## Description
 
-Coming soon
+This repo contains the following projects:
+
+### 1 - AmazingNumbers
+
+basic operations on integers
+
+### 2 - CinemaRoomManager
+
+input and output, multi-dimensional arrays, loops, conditions
+
+### 3 - CoffeeMachine
+
+loops, conditions, practice working with classes
