@@ -5,10 +5,11 @@ public class CoffeeMachine {
         Scanner term = new Scanner(System.in);
         Machine coffeeMaker = new Machine();
         int cups;
+
         fillMachine(coffeeMaker);
         System.out.println("Write how many cups of coffee you will need:");
         cups = term.nextInt();
-        calculateAndPrintIngredients(cups);
+        coffeeMaker.ableToMake(cups);
     }
 
     public static void calculateAndPrintIngredients(int cups) {
