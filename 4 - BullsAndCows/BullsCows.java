@@ -4,14 +4,49 @@ import java.util.*;
 
 public class BullsCows {
     public static void main(String[] args) {
-        int n = 9305;
         Scanner term = new Scanner(System.in);
         BullsCowsCount bc = new BullsCowsCount();
-        char[] guess = term.nextLine().toCharArray();
-        char[] number = String.valueOf(n).toCharArray();
+        int len;
+        int n;
 
-        bc.countBullsCows(number, guess);
-        printGrade(bc.getBulls(), bc.getCows(), n);
+        len = term.nextInt();
+        if (len > 0 && len <= 10) {
+            n = generateNumber(len);
+            System.out.printf("The random secret number is %d.\n", n);
+        } else {
+            System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.\n", len);
+        }
+        //char[] guess = term.nextLine().toCharArray();
+        //char[] number = String.valueOf(n).toCharArray();
+
+        //bc.countBullsCows(number, guess);
+        //printGrade(bc.getBulls(), bc.getCows(), n);
+    }
+
+    public static int generateNumber(int len) {
+        Random generator = new Random();
+        int min = (int) Math.pow(10, (len - 1));
+        int max = (int) Math.pow(10, len) - 1;
+        int interval = max - min;
+        int number;
+
+        do {
+            number = generator.nextInt(interval + 1) + min;
+        } while (!uniqueDigits(number));
+        return number;
+    }
+
+    public static boolean uniqueDigits(int number) {
+        char[] arr = String.valueOf(number).toCharArray();
+        int[] digits = new int[10];
+
+        for (char i : arr) {
+            digits[i - 48]++;
+            if (digits[i - 48] > 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void printGrade(int bulls, int cows, int number) {
