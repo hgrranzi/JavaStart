@@ -1,26 +1,35 @@
 import java.util.*;
 
-import java.util.*;
-
 public class BullsCows {
     public static void main(String[] args) {
         Scanner term = new Scanner(System.in);
-        BullsCowsCount bc = new BullsCowsCount();
+        BullsCowsCount bc;
         int len;
         int n;
+        char[] number;
+        char[] guess;
+        int turn;
 
+        System.out.println("Please, enter the secret code's length:");
         len = term.nextInt();
         if (len > 0 && len <= 10) {
+            System.out.println("Okay, let's start a game!");
             n = generateNumber(len);
-            System.out.printf("The random secret number is %d.\n", n);
+            number = String.valueOf(n).toCharArray();
+            bc = new BullsCowsCount();
+            turn = 1;
+            while (bc.getBulls() != number.length) {
+                bc.zero();
+                System.out.printf("Turn %d:\n", turn);
+                guess = term.next().toCharArray();
+                bc.countBullsCows(number, guess);
+                printGrade(bc.getBulls(), bc.getCows());
+                turn++;
+            }
+            System.out.println("Congratulations! You guessed the secret code.");
         } else {
             System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.\n", len);
         }
-        //char[] guess = term.nextLine().toCharArray();
-        //char[] number = String.valueOf(n).toCharArray();
-
-        //bc.countBullsCows(number, guess);
-        //printGrade(bc.getBulls(), bc.getCows(), n);
     }
 
     public static int generateNumber(int len) {
@@ -49,7 +58,7 @@ public class BullsCows {
         return true;
     }
 
-    public static void printGrade(int bulls, int cows, int number) {
+    public static void printGrade(int bulls, int cows) {
         if (bulls > 0 && cows > 0) {
             System.out.printf("Grade: %d bull(s) and %d cow(s). ", bulls, cows);
         } else if (bulls > 0) {
@@ -59,6 +68,6 @@ public class BullsCows {
         } else {
             System.out.print("Grade: None. ");
         }
-        System.out.printf("The secret code is %d\n", number);
+        System.out.println();
     }
 }

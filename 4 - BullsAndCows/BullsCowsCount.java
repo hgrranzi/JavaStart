@@ -10,7 +10,12 @@ public class BullsCowsCount {
         return this.cows;
     }
 
-    public void countBullsCows(char[] number, char[] guess) {
+    public void countBullsCows(char[] num, char[] guess) {
+        char[] number = new char[num.length];
+
+        for (int i = 0; i < num.length; i++) {
+            number[i] = num[i];
+        }
         for (int i = 0; i < number.length; i++) {
             if (guess[i] == number[i]) {
                 this.bulls++;
@@ -26,5 +31,10 @@ public class BullsCowsCount {
                 }
             }
         }
+    }
+
+    public void zero() {
+        this.bulls = 0;
+        this.cows = 0;
     }
 }
