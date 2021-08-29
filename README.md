@@ -25,3 +25,7 @@ loops, conditions, practice working with classes
 ### 4 - BullsAndCows
 
 integer arithmetic, random numbers generating, storing data, handling errors
+
+### 5 - EncryptionDecryption
+
+files, command line, polymorphism, design patterns
