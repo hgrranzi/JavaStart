@@ -9,7 +9,7 @@ public class BullsCows {
             game.play();
         }
         else {
-            System.out.println("NOT Ok");
+            System.out.println("Error: Invalid input");
         }
     }
 }

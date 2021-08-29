@@ -13,6 +13,10 @@ class BullsCowsCount {
     void countBullsCows(char[] num, char[] guess) {
         char[] number = new char[num.length];
 
+        if (num.length != guess.length) {
+            System.out.println("Error: Invalid input");
+            System.exit(1);
+        }
         for (int i = 0; i < num.length; i++) {
             number[i] = num[i];
         }
