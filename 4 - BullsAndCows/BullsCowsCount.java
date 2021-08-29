@@ -1,16 +1,16 @@
-public class BullsCowsCount {
+class BullsCowsCount {
     private int bulls;
     private int cows;
 
-    public int getBulls() {
+    int getBulls() {
         return this.bulls;
     }
 
-    public int getCows() {
+    int getCows() {
         return this.cows;
     }
 
-    public void countBullsCows(char[] num, char[] guess) {
+    void countBullsCows(char[] num, char[] guess) {
         char[] number = new char[num.length];
 
         for (int i = 0; i < num.length; i++) {
@@ -33,7 +33,7 @@ public class BullsCowsCount {
         }
     }
 
-    public void zero() {
+    void zero() {
         this.bulls = 0;
         this.cows = 0;
     }
