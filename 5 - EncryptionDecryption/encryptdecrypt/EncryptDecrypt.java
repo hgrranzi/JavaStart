@@ -1,12 +1,22 @@
 package encryptdecrypt;
-import java.util.*;
 
 public class EncryptDecrypt {
     public static void main(String[] args) {
-        Scanner term = new Scanner(System.in);
-        String option = term.nextLine();
-        String message = term.nextLine();
-        int key = term.nextInt();
+        String option = "enc";
+        String message = "";
+        int key = 0;
+
+        for (int i = 0; i < args.length; i = i + 2) {
+            if (args[i].equals("-mode")) {
+                option = args[i + 1];
+            }
+            if (args[i].equals("-key")) {
+                key = Integer.parseInt(args[i + 1]);
+            }
+            if (args[i].equals("-data")) {
+                message = args[i + 1];
+            }
+        }
 
         if ("enc".equals(option)) {
             System.out.println(encryptShift(message, key));
