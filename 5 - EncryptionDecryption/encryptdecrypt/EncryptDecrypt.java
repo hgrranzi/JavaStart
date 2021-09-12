@@ -1,53 +1,54 @@
 package encryptdecrypt;
+import java.io.*;
+import java.util.*;
 
 public class EncryptDecrypt {
     public static void main(String[] args) {
-        String option = "enc";
-        String message = "";
-        int key = 0;
+        Converter converter = new Converter();
+        String outPath = "";
+        File file;
+        PrintWriter pw;
 
         for (int i = 0; i < args.length; i = i + 2) {
             if (args[i].equals("-mode")) {
-                option = args[i + 1];
+                converter.setMode(args[i + 1]);
             }
             if (args[i].equals("-key")) {
-                key = Integer.parseInt(args[i + 1]);
+                converter.setKey(Integer.parseInt(args[i + 1]));
             }
             if (args[i].equals("-data")) {
-                message = args[i + 1];
+                converter.setData(args[i + 1]);
+            }
+            if (args[i].equals("-in") && converter.getData().equals("")) {
+                try {
+                    converter.setData(takeDataFromFile(args[i + 1]));
+                } catch (FileNotFoundException e) {
+                    System.out.println("Error");
+                    System.exit(1);
+                }
+            }
+            if (args[i].equals("-out")) {
+               outPath = args[i + 1];
             }
         }
-
-        if ("enc".equals(option)) {
-            System.out.println(encryptShift(message, key));
-        } else if ("dec".equals(option)) {
-            System.out.println(decryptShift(message, key));
-        }
+       if (outPath.equals("")) {
+            System.out.println(converter.convert());
+       } else {
+            file = new File(outPath);
+            try {
+                pw = new PrintWriter(file);
+                pw.println(converter.convert());
+                pw.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("Error");
+                System.exit(1);
+            }
+       }
     }
 
-    static char[] encryptShift(String text, int key) {
-        char[] encryptedText;
-
-        encryptedText = new char[text.length()];
-        for (int i = 0; i < encryptedText.length; i++) {
-            encryptedText[i] = (char) (text.charAt(i) + key);
-            //if (encryptedText[i] > 122) {
-            //    encryptedText[i] = (char) (96 + (encryptedText[i] - 122));
-            //}
-        }
-        return encryptedText;
-    }
-
-    static char[] decryptShift(String text, int key) {
-        char[] encryptedText;
-
-        encryptedText = new char[text.length()];
-        for (int i = 0; i < encryptedText.length; i++) {
-            encryptedText[i] = (char) (text.charAt(i) - key);
-            //if (encryptedText[i] < 97) {
-             //   encryptedText[i] = (char) (123 - (97 - encryptedText[i]));
-            //}
-        }
-        return encryptedText;
+    static String takeDataFromFile(String path) throws FileNotFoundException {
+        File file = new File(path);
+        Scanner reader = new Scanner(file);
+        return reader.nextLine();
     }
 }
