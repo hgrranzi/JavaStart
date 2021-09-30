@@ -1,3 +1,5 @@
+package tictactoe;
+
 import java.util.*;
 
 public class Board {
@@ -17,6 +19,10 @@ public class Board {
         return board;
     }
 
+    public void updateBoard(Point point, char c) {
+        this.board[point.getY() - 1][point.getX() - 1] = c;
+    }
+
     public void fillBoard(String input) {
         this.board[0] = Arrays.copyOfRange(input.toCharArray(), 0, 3);
         this.board[1] = Arrays.copyOfRange(input.toCharArray(), 3, 6);
@@ -33,5 +39,36 @@ public class Board {
             System.out.println("|");
         }
         System.out.println("---------");
+    }
+}
+
+class Point {
+    private int x;
+    private int y;
+
+    public Point() {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

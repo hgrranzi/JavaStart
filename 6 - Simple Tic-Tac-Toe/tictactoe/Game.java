@@ -1,3 +1,5 @@
+package tictactoe;
+
 import java.util.*;
 
 public class Game {
@@ -96,6 +98,15 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public void play() {
+        Point point = null;
+        while (point == null) {
+            point = Parser.takeMove(this.board);
+        }
+        this.board.updateBoard(point, 'X');
+        this.board.printBoard();
     }
 }
 
