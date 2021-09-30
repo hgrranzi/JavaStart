@@ -17,7 +17,11 @@ public class Game {
         this.board.printBoard();
     }
 
-    public GameState analyze() {
+    public void updateState() {
+        this.state = analyze();
+    }
+
+    GameState analyze() {
         boolean xWin;
         boolean oWin;
         int xCount = 0;
@@ -102,11 +106,22 @@ public class Game {
 
     public void play() {
         Point point = null;
-        while (point == null) {
-            point = Parser.takeMove(this.board);
+        int i = 0;
+        while (i < 9 && this.state != GameState.X_WINS && this.state != GameState.O_WINS) {
+            while (point == null) {
+                point = Parser.takeMove(this.board);
+            }
+            if (i % 2 == 0) {
+                this.board.updateBoard(point, 'X');
+            } else {
+                this.board.updateBoard(point, 'O');
+            }
+            updateState();
+            this.board.printBoard();
+            point = null;
+            i++;
         }
-        this.board.updateBoard(point, 'X');
-        this.board.printBoard();
+        System.out.println(this.state);
     }
 }
 

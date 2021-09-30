@@ -49,7 +49,7 @@ public class Parser {
     }
 
     public static Point takeMove(Board board) {
-        String[] move;
+        String[] move = null;
         Point point = null;
 
         move = Parser.takeInput("Enter the coordinates: ").split(" ");
