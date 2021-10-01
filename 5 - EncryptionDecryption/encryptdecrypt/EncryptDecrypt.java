@@ -1,7 +1,21 @@
 package encryptdecrypt;
-import java.io.*;
-import java.util.*;
 
+public class EncryptDecrypt {
+    public static void main(String[] args) {
+        Converter converter;
+        Input input = new Input();
+        input.takeInput(args);
+        if ("unicode".equals(input.getAlg())) {
+            converter = new UnicodeConverter();
+        } else {
+            converter = new ShiftConverter();
+        }
+        converter.convert(input);
+    }
+
+}
+
+/*
 public class EncryptDecrypt {
     public static void main(String[] args) {
         Converter converter = new Converter();
@@ -52,3 +66,4 @@ public class EncryptDecrypt {
         return reader.nextLine();
     }
 }
+*/

@@ -1,56 +1,53 @@
 package encryptdecrypt;
 
-public class Converter {
-    private String mode;
-    private String data;
-    private int key;
+import java.util.Arrays;
 
-    public Converter() {
-        this.mode = "enc";
-        this.data = "";
-        this.key = 0;
-    }
+public interface Converter {
 
-    String getData() {
-        return this.data;
-    }
-
-    void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    void setData(String data) {
-        this.data = data;
-    }
-
-    void setKey(int key) {
-        this.key = key;
-    }
-
-    char[] convert() {
-        if ("dec".equals(this.mode)) {
-             return decryptShift();
+    public default String convert(Input input) {
+        if ("dec".equals(input.getMode())) {
+            return encrypt(input.getData(), input.getKey());
         }
-        return encryptShift();
+        return decrypt(input.getData(), input.getKey());
     }
 
-    char[] encryptShift() {
+    public abstract String encrypt(String data, int key);
+
+    public abstract String decrypt(String data, int key);
+}
+
+class ShiftConverter implements Converter {
+    @Override
+    public String encrypt(String data, int key) {
+        return null;
+    }
+
+    @Override
+    public String decrypt(String data, int key) {
+        return null;
+    }
+}
+
+class UnicodeConverter implements Converter {
+    @Override
+    public String encrypt(String data, int key) {
         char[] encryptedText;
 
-        encryptedText = new char[this.data.length()];
+        encryptedText = new char[data.length()];
         for (int i = 0; i < encryptedText.length; i++) {
-            encryptedText[i] = (char) (this.data.charAt(i) + this.key);
+            encryptedText[i] = (char) (data.charAt(i) + key);
         }
-        return encryptedText;
+        return Arrays.toString(encryptedText);
     }
 
-    char[] decryptShift() {
+    @Override
+    public String decrypt(String data, int key) {
         char[] decryptedText;
 
-        decryptedText = new char[this.data.length()];
+        decryptedText = new char[data.length()];
         for (int i = 0; i < decryptedText.length; i++) {
-            decryptedText[i] = (char) (this.data.charAt(i) - this.key);
+            decryptedText[i] = (char) (data.charAt(i) - key);
         }
-        return decryptedText;
+        return Arrays.toString(decryptedText);
     }
 }
