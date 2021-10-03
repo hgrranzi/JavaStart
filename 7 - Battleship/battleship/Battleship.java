@@ -3,10 +3,10 @@ package battleship;
 import java.io.*;
 
 public class Battleship {
-    public static void main(String[] args) throws IOException {
-        Field field = new Field();
+    public static void main(String[] args) throws IOException, BattleshipExceptions {
+        Game game = new Game();
 
-        field.printField();
+        game.beforeStart();
     }
 }
 
