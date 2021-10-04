@@ -32,6 +32,16 @@ public class Coordinates {
         return y2;
     }
 
+    public static Coordinates takeCoordinates() throws InvalidInputException {
+        Scanner term = new Scanner(System.in);
+        String input = term.next();
+        if (!validInput(input)) {
+            throw new InvalidInputException("Invalid input!");
+        }
+        return convertInputToCoordinates(input);
+    }
+
+
     public static Coordinates takeCoordinates(Ship ship) throws InvalidInputException {
         Scanner term = new Scanner(System.in);
         String first = term.next();
@@ -41,6 +51,16 @@ public class Coordinates {
             throw new InvalidInputException("Invalid input!");
         }
         return (convertInputToCoordinates(ship, first, second));
+    }
+
+    private static Coordinates convertInputToCoordinates(String input) throws InvalidInputException {
+        int y1 = (int)input.charAt(0) - 64;
+        int x1 = Integer.parseInt(input.substring(1));
+
+        if (x1 < 1 || x1 > 10 || y1 < 1 || y1 > 10) {
+            throw new InvalidInputException("Invalid coordinates!");
+        }
+        return new Coordinates(y1, x1, 0, 0);
     }
 
     private static Coordinates convertInputToCoordinates(Ship ship, String first, String second) throws InvalidInputException {

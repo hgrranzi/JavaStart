@@ -66,6 +66,18 @@ public class Field {
         }
     }
 
+    public boolean hitShip(Coordinates coordinates) {
+        int x = coordinates.getX1();
+        int y = coordinates.getY1();
+
+        if (this.field[y][x] == 'O') {
+            this.field[y][x] = 'X';
+            return true;
+        }
+        this.field[y][x] = 'M';
+        return false;
+    }
+
     private void placeVerticalShip(int x, int y1, int y2) throws BattleshipExceptions {
         for (int i = y1; i <= y2; i++) {
             if (this.field[i][x] == 'O' || this.field[i][x] == 'N') {
