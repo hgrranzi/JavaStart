@@ -33,22 +33,22 @@ public class Field {
         }
     }
 
-    private void printCell(char c) {
-        if (c == 'N') {
+    private void printCell(char c, boolean fog) {
+        if (c == 'N' || (c == 'O' && fog)) {
             System.out.print("~" + " ");
         } else {
             System.out.print(c + " ");
         }
     }
 
-    public void printField() {
+    public void printField(boolean fog) {
         System.out.println();
         for (int i = 0; i <= this.SIZE; i++) {
             for (int j = 0; j <= this.SIZE; j++) {
                 if (i == 0 && j == this.SIZE) {
                     System.out.print(this.field[i][j] + "0");
                 } else {
-                    printCell(this.field[i][j]);
+                    printCell(this.field[i][j], fog);
                 }
             }
             System.out.println();

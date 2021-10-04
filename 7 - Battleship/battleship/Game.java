@@ -26,11 +26,11 @@ public class Game {
                 continue;
             }
             this.ships[i].setCoordinates(coordinates); // set coordinates to the ship
-            field.printField();
+            field.printField(false);
             i++;
        }
         System.out.println("The game starts!");
-        field.printField();
+        field.printField(true);
     }
 
     public void shoot() {
@@ -47,12 +47,13 @@ public class Game {
                 continue;
             }
             hit = field.hitShip(coordinates); // try to hit a ship
-            field.printField();
+            field.printField(true);
             if (hit) {
                 System.out.println("You hit a ship!");
             } else {
                 System.out.println("You missed!");
             }
+            field.printField(false);
             i++;
         }
     }
