@@ -33,17 +33,27 @@ public class Field {
         }
     }
 
+    private void printCell(char c) {
+        if (c == 'N') {
+            System.out.print("~" + " ");
+        } else {
+            System.out.print(c + " ");
+        }
+    }
+
     public void printField() {
+        System.out.println();
         for (int i = 0; i <= this.SIZE; i++) {
             for (int j = 0; j <= this.SIZE; j++) {
                 if (i == 0 && j == this.SIZE) {
                     System.out.print(this.field[i][j] + "0");
                 } else {
-                    System.out.print(this.field[i][j] + " ");
+                    printCell(this.field[i][j]);
                 }
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public void placeShip(Coordinates coordinates) throws BattleshipExceptions {
@@ -56,7 +66,7 @@ public class Field {
         }
     }
 
-    void placeVerticalShip(int x, int y1, int y2) throws BattleshipExceptions {
+    private void placeVerticalShip(int x, int y1, int y2) throws BattleshipExceptions {
         for (int i = y1; i <= y2; i++) {
             if (this.field[i][x] == 'O' || this.field[i][x] == 'N') {
                 throw new WrongLocationException("Too close to another ship!");
@@ -79,7 +89,7 @@ public class Field {
         }
     }
 
-    void placeHorizontalShip(int y, int x1, int x2) throws BattleshipExceptions {
+    private void placeHorizontalShip(int y, int x1, int x2) throws BattleshipExceptions {
         for (int i = x1; i <= x2; i++) {
             if (this.field[y][i] == 'O' || this.field[y][i] == 'N') {
                 throw new WrongLocationException("Too close to another ship!");

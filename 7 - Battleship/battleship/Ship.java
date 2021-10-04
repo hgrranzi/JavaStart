@@ -9,7 +9,7 @@ public enum Ship {
 
     private final String name;
     private Coordinates coordinates;
-    int life;
+    private int life;
 
     private Ship(String name, int life) {
         this.name = name;
@@ -17,17 +17,17 @@ public enum Ship {
         this.life = life;
     }
 
+    public int getLife() {
+        return life;
+    }
+
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "Ship{" +
-                "name='" + name + '\'' +
-                ", coordinates=" + coordinates +
-                ", life=" + life +
-                '}';
+    @Override
+    public String toString() {
+        return this.name + " (" + this.life + " cells)";
     }
 }
 
