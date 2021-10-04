@@ -16,6 +16,7 @@ public class Game {
        int i = 0;
        Coordinates coordinates;
 
+       field.printField(true);
        while (i < this.shipsCount) {
            System.out.printf("Enter the coordinates of the %s:\n", ships[i]);
             try {
@@ -36,9 +37,9 @@ public class Game {
     public void shoot() {
         Coordinates coordinates;
         boolean hit = false;
-        int i = 0;
+        boolean shot = false;
 
-        while (i < 1) {
+        while (!shot) {
             System.out.printf("Take a shot!\n");
             try {
                 coordinates = Coordinates.takeCoordinates();
@@ -49,12 +50,36 @@ public class Game {
             hit = field.hitShip(coordinates); // try to hit a ship
             field.printField(true);
             if (hit) {
-                System.out.println("You hit a ship!");
+                if (sankShip(ships, coordinates)) {
+                    System.out.println("You sank a ship!");
+                } else {
+                    System.out.println("You hit a ship!");
+                }
             } else {
                 System.out.println("You missed!");
             }
-            field.printField(false);
-            i++;
+            shot = true;
         }
+    }
+
+    public boolean sankShip(Ship[] ships, Coordinates coordinates) {
+        for (int i = 0; i < ships.length; i++) {
+            if (ships[i].getLife() > 0 && ships[i].atCell(coordinates)) {
+                ships[i].setLife(ships[i].getLife() - 1);
+                if (ships[i].getLife() == 0) {
+                    this.shipsCount--;
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
+    public void play() {
+        while (this.shipsCount > 0) {
+            shoot();
+        }
+        System.out.println("You sank the last ship. You won. Congratulations!");
     }
 }

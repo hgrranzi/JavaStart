@@ -21,6 +21,10 @@ public enum Ship {
         return life;
     }
 
+    public void setLife(int life) {
+        this.life = life;
+    }
+
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
@@ -28,6 +32,15 @@ public enum Ship {
     @Override
     public String toString() {
         return this.name + " (" + this.life + " cells)";
+    }
+
+    public boolean atCell(Coordinates coordinates) {
+        if (this.coordinates.getX1() == this.coordinates.getX2()) {
+            return (coordinates.getX1() == this.coordinates.getX1()
+                    && coordinates.getY1() >= this.coordinates.getY1() && coordinates.getY1() <= this.coordinates.getY2());
+        }
+        return (coordinates.getY1() == this.coordinates.getY1()
+                && coordinates.getX1() >= this.coordinates.getX1() && coordinates.getX1() <= this.coordinates.getX2());
     }
 }
 

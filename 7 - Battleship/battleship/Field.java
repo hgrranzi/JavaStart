@@ -74,7 +74,9 @@ public class Field {
             this.field[y][x] = 'X';
             return true;
         }
-        this.field[y][x] = 'M';
+        if (this.field[y][x] != 'X') {
+            this.field[y][x] = 'M';
+        }
         return false;
     }
 
