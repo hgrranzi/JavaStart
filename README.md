@@ -29,3 +29,15 @@ integer arithmetic, random numbers generating, storing data, handling errors
 ### 5 - EncryptionDecryption
 
 files, command line, polymorphism, design patterns
+
+### 6 - Simple Tic-Tac-Toe
+
+using methods, handling errors, and processing user input
+
+### 7 - Battleship
+
+processing user input, handling errors, practice working with classes and methods
+
+### 8 - NumberBaseConverter
+
+loops and functions, numeric data types, different numeral systems
