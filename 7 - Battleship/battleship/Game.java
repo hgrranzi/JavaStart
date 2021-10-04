@@ -1,85 +1,52 @@
 package battleship;
 
+import java.io.*;
+
 public class Game {
 
-    private Field field;
-    private int shipsCount;
-    private Ship[] ships;
+    private Player player1;
+    private Player player2;
 
     public Game() {
-        this.field = new Field();
-        this.shipsCount = 5;
-        this.ships = Ship.values();
-    }
-
-    public void beforeStart() {
-       int i = 0;
-       Coordinates coordinates;
-
-       field.printField(true);
-       while (i < this.shipsCount) {
-           System.out.printf("Enter the coordinates of the %s:\n", ships[i]);
-            try {
-                coordinates = Coordinates.takeCoordinates(ships[i]);
-                field.placeShip(coordinates); // 2 place the ship
-            } catch (BattleshipExceptions e) {
-                System.out.println(e);
-                continue;
-            }
-            this.ships[i].setCoordinates(coordinates); // set coordinates to the ship
-            field.printField(false);
-            i++;
-       }
-        System.out.println("The game starts!");
-        field.printField(true);
-    }
-
-    public void shoot() {
-        Coordinates coordinates;
-        boolean hit = false;
-        boolean shot = false;
-
-        while (!shot) {
-            System.out.printf("Take a shot!\n");
-            try {
-                coordinates = Coordinates.takeCoordinates();
-            } catch (BattleshipExceptions e) {
-                System.out.println(e);
-                continue;
-            }
-            hit = field.hitShip(coordinates); // try to hit a ship
-            field.printField(true);
-            if (hit) {
-                if (sankShip(ships, coordinates)) {
-                    System.out.println("You sank a ship!");
-                } else {
-                    System.out.println("You hit a ship!");
-                }
-            } else {
-                System.out.println("You missed!");
-            }
-            shot = true;
-        }
-    }
-
-    public boolean sankShip(Ship[] ships, Coordinates coordinates) {
-        for (int i = 0; i < ships.length; i++) {
-            if (ships[i].getLife() > 0 && ships[i].atCell(coordinates)) {
-                ships[i].setLife(ships[i].getLife() - 1);
-                if (ships[i].getLife() == 0) {
-                    this.shipsCount--;
-                    return true;
-                }
-                break;
-            }
-        }
-        return false;
+        this.player1 = new Player(1);
+        this.player2 = new Player(2);
     }
 
     public void play() {
-        while (this.shipsCount > 0) {
-            shoot();
+        player1.beforeStart();
+        promptEnter();
+        player2.beforeStart();
+        promptEnter();
+        while (player1.getShipsCount() > 0 && player2.getShipsCount() > 0) {
+            printInstruction(this.player1, this.player2);
+            player2.shoot();
+            promptEnter();
+            if (player2.getShipsCount() == 0) {
+                break;
+            }
+            printInstruction(this.player2, this.player1);
+            player1.shoot();
+            promptEnter();
         }
         System.out.println("You sank the last ship. You won. Congratulations!");
+    }
+
+    void printInstruction(Player shoot, Player shooted) {
+        shooted.getField().printField(true);
+        System.out.printf("---------------------\n");
+        shoot.getField().printField(false);
+        System.out.printf("Player %d, it's your turn:\n", shoot.id);
+    }
+
+    public static void promptEnter() {
+        System.out.println("Press Enter and pass the move to another player");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+
+        }
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
     }
 }
