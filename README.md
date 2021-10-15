@@ -42,6 +42,6 @@ processing user input, handling errors, practice working with classes and method
 
 loops and functions, numeric data types, different numeral systems
 
-### 9 - Readability Score
+### 9 - ReadabilityScore
 
 regexps, quantifiers, shorthands, Math library
