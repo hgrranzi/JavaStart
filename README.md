@@ -41,3 +41,7 @@ processing user input, handling errors, practice working with classes and method
 ### 8 - NumberBaseConverter
 
 loops and functions, numeric data types, different numeral systems
+
+### 9 - Readability Score
+
+regexps, quantifiers, shorthands, Math library
