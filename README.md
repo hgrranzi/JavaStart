@@ -44,4 +44,8 @@ loops and functions, numeric data types, different numeral systems
 
 ### 9 - ReadabilityScore
 
-regexps, quantifiers, shorthands, Math library
+regexps, Math library
+
+### 10 - GameOfLife
+
+multithreading, Swing library, Random class
