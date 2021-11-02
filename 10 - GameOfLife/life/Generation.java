@@ -13,7 +13,7 @@ public class Generation {
     static char[][] nextGeneration(char[][] currentField) {
         char[][] nextField = new char[currentField.length][currentField.length];
         int i = 0;
-        int j = 0;
+        int j;
 
         while (i < currentField.length) {
             j = 0;
@@ -31,10 +31,26 @@ public class Generation {
     }
 
     static char liveCellLife(char[][] currentField, int i, int j) {
+        int liveAround = countLiveAround(currentField, i, j) -  1;
+
+        if (liveAround == 2 || liveAround == 3) {
+            return 'O';
+        }
         return ' ';
     }
 
     static char deadCellLife(char[][] currentField, int i, int j) {
-        return 'O';
+        int liveAround = countLiveAround(currentField, i, j);
+
+        if (liveAround == 3) {
+            return 'O';
+        }
+        return ' ';
+    }
+
+    static int countLiveAround(char[][] currentField, int i, int j) {
+        int count = 0;
+
+        return count;
     }
 }
