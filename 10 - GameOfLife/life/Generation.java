@@ -4,10 +4,28 @@ import java.util.Scanner;
 
 public class Generation {
 
-    public static void runLife(Field field) {
+    public static void runLife(Field field) throws InterruptedException {
         for (int i = 0; i < field.getSteps(); i++) {
+            System.out.println("Generation #" + (i + 1));
+            System.out.println("Alive: " + countAlive(field));
+            field.printField();
+            Thread.sleep(400);
             field.setField(nextGeneration(field.getField()));
         }
+    }
+
+    static int countAlive(Field field) {
+        char[][] arr = field.getField();
+        int count = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (arr[i][j] == 'O') {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     static char[][] nextGeneration(char[][] currentField) {
