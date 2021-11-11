@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class GameOfLife extends JFrame {
 
+    static JLabel generation;
+    static JLabel alive;
     static JPanel[][] fieldPanel;
 
     public static void main(String[] args) {
@@ -27,23 +29,33 @@ public class GameOfLife extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
-        JLabel generation = new JLabel("Generation: #1");
-        generation.setBounds(5, 5, 100, 10);
-        add(generation);
-        JLabel alive = new JLabel("Alive: 0");
-        alive.setBounds(5, 20, 100, 10);
-        add(alive);
+        JPanel text = new JPanel();
+        text.setBounds(0, 0, 300, 40);
+        text.setVisible(true);
+        text.setLayout(new GridLayout(2, 1));
+        add(text);
+        generation = new JLabel("Generation: #1");
+        //generation.setBounds(5, 5, 100, 10);
+        text.add(generation);
+        alive = new JLabel("Alive: 0");
+        //alive.setBounds(5, 20, 100, 10);
+        text.add(alive);
 
+        JPanel img = new JPanel();
+        img.setBounds(5, 40, 290, 225);
+        img.setVisible(true);
+        add(img);
         fieldPanel = new JPanel[field.getField().length][field.getField().length];
         for (int y = 0; y < fieldPanel.length; y++) {
             for (int x = 0; x < fieldPanel.length; x++) {
                 fieldPanel[y][x] = new JPanel();
                 fieldPanel[y][x].setVisible(true);
                 fieldPanel[y][x].setBackground(Color.BLACK);
-                add(fieldPanel[y][x]);
+                img.add(fieldPanel[y][x]);
             }
         }
-        setLayout(new GridLayout(fieldPanel.length, fieldPanel.length, 1, 1));
+        img.setLayout(new GridLayout(fieldPanel.length, fieldPanel.length, 1, 1));
+        //setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
     }
 
     public void drawPanel(Field field) {
