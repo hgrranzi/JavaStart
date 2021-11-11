@@ -1,18 +1,6 @@
 package life;
 
-import java.util.Scanner;
-
 public class Generation {
-
-    public static void runLife(Field field) throws InterruptedException {
-        for (int i = 0; i < field.getSteps(); i++) {
-            System.out.println("Generation #" + (i + 1));
-            System.out.println("Alive: " + countAlive(field));
-            field.printField();
-            Thread.sleep(400);
-            field.setField(nextGeneration(field.getField()));
-        }
-    }
 
     static int countAlive(Field field) {
         char[][] arr = field.getField();
